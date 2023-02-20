@@ -1,24 +1,21 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+import { useUser } from './hooks';
 import './App.css';
+import UserSearch from './modules/UserSearch/UserSearch';
+import UserCard from './modules/UserCard/UserCard';
+import SkeletonLoader from './modules/Loader/Loader';
 
 function App() {
+  const [search, setSearch] = useState('migigim')
+  const { loading, userData } = useUser(search)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <UserSearch setValue={setSearch} />
+      {
+        loading ? <SkeletonLoader /> : <UserCard userData={userData} />
+      }
+    </div >
   );
 }
 
